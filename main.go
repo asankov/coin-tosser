@@ -33,6 +33,7 @@ func main() {
 	fmt.Printf("1. Heads: %d, Tails: %d, Dist (H/D): %f\n", h, t, dist)
 
 	iterate(coins, r)
+	// iterateInOrder(coins, r)
 
 	h, t, dist = countCoins(coins)
 	fmt.Printf("2. Heads: %d, Tails: %d, Dist (H/D): %f \n", h, t, dist)
@@ -62,6 +63,21 @@ func iterate(coins []*Coin, r *rand.Rand) {
 		rr := r.Intn(numCoins)
 		coin := coins[rr]
 
+		if coin.Position == Tails {
+			// if it is tails, it becomes heads
+			coin.Position = Heads
+		} else {
+			// if it is heads, it has equal chances to land as tails, or stay heads
+			if r.Intn(2) == 0 {
+				coin.Position = Tails
+			}
+		}
+	}
+}
+
+func iterateInOrder(coins []*Coin, r *rand.Rand) {
+	for _, coin := range coins {
+		// get the coin in order
 		if coin.Position == Tails {
 			// if it is tails, it becomes heads
 			coin.Position = Heads
