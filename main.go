@@ -43,6 +43,7 @@ func createCoins(r *rand.Rand) []*Coin {
 
 	for i := 0; i < numCoins; i++ {
 		var position Position
+		// at the beginning it has equal chances to be heads, or tails
 		if r.Intn(2) == 1 {
 			position = Heads
 		} else {
@@ -57,12 +58,15 @@ func createCoins(r *rand.Rand) []*Coin {
 
 func iterate(coins []*Coin, r *rand.Rand) {
 	for i := 0; i < machineIterations; i++ {
+		// get a random coin from the pile
 		rr := r.Intn(numCoins)
 		coin := coins[rr]
 
 		if coin.Position == Tails {
+			// if it is tails, it becomes heads
 			coin.Position = Heads
 		} else {
+			// if it is heads, it has equal chances to land as tails, or stay heads
 			if r.Intn(2) == 0 {
 				coin.Position = Tails
 			}
